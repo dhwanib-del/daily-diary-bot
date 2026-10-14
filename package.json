@@ -1,0 +1,25 @@
+{
+  "name": "seven-day-diary-bot",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "engines": {"node": ">=20.9.0"},
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "node --test tests/*.test.mjs",
+    "enroll": "node --env-file=.env.local scripts/enroll.mjs",
+    "export": "node --env-file=.env.local scripts/export.mjs"
+  },
+  "dependencies": {
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "chat": "4.41.1",
+    "@chat-adapter/state-pg": "4.41.1",
+    "@photon-ai/chat-adapter-imessage": "3.2.0",
+    "pg": "8.23.1"
+  },
+  "devDependencies": {}
+}
