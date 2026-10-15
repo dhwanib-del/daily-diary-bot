@@ -10,12 +10,12 @@ from diary.participants p
 left join diary.sessions s on s.participant_id=p.id
 group by p.participant_code order by p.participant_code;
 
--- Patterns of outside/staying choices and average self-reported mood change.
--- Skipped mood ratings are naturally excluded from the average.
+-- Patterns of outside/staying choices and today's current mood (1=not great, 5=great).
+-- Earlier mood was only collected in an older version; do not interpret missing values as 0.
 select activity,
        count(*) as n_entries,
        count(distinct participant_id) as n_participants,
-       round(avg((mood_now-mood_earlier)::numeric),2) as avg_reported_mood_change,
+       round(avg(mood_now::numeric),2) as avg_current_mood,
        count(*) filter (where perceived_mood_effect='better') as perceived_better,
        count(*) filter (where functioning='struggled') as struggled_with_tasks
 from diary.sessions where status='complete'
