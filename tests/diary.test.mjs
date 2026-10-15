@@ -20,7 +20,7 @@ test('branching reasons are different',()=>{
  assert.deepEqual(parseAnswer(3,'1','went'),{main_reason:'work_class'});
  assert.deepEqual(parseAnswer(3,'1','wanted'),{main_reason:'energy'});
  assert.equal(parseAnswer(3,'6','went'),null);
- assert.match(QUESTIONS[3](2,'went'),/went out/);
+ assert.match(QUESTIONS[3](2,'went'),/go outside/);
  assert.match(QUESTIONS[3](2,'chose'),/stay inside/);
 });
 test('effects, functioning and note',()=>{
