@@ -20,8 +20,8 @@ test('branching reasons are different',()=>{
  assert.deepEqual(parseAnswer(3,'1','went'),{main_reason:'work_class'});
  assert.deepEqual(parseAnswer(3,'1','wanted'),{main_reason:'energy'});
  assert.equal(parseAnswer(3,'6','went'),null);
- assert.match(QUESTIONS[3](2,'went'),/go outside/);
- assert.match(QUESTIONS[3](2,'chose'),/stay inside/);
+ assert.match(QUESTIONS[3](2,'went'),/reason for going out/);
+ assert.match(QUESTIONS[3](2,'chose'),/reason for staying in/);
 });
 test('effects, functioning and note',()=>{
  assert.deepEqual(parseAnswer(4,'4','went'),{perceived_mood_effect:'unsure'});
@@ -48,4 +48,15 @@ test('texts are short and do not contain emoji',()=>{
    assert.match(message,/Reply /);
   }
  }
+});
+
+test('neutral mood wording and response codes stay comparable',()=>{
+ assert.doesNotMatch(QUESTIONS[4](1,'went'),/affect your mood|made you feel/i);
+ assert.doesNotMatch(QUESTIONS[4](1,'chose'),/affect your mood|made you feel/i);
+ assert.match(QUESTIONS[4](1,'went'),/noticed no difference/);
+ assert.match(QUESTIONS[4](1,'chose'),/Hard to say/);
+ assert.deepEqual(parseAnswer(1,'3'),{activity:'wanted'});
+ assert.deepEqual(parseAnswer(3,'5','chose'),{main_reason:'preferred_home'});
+ assert.deepEqual(parseAnswer(4,'2','went'),{perceived_mood_effect:'same'});
+ assert.deepEqual(parseAnswer(5,'4'),{functioning:'little_planned'});
 });
