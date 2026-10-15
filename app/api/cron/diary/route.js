@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 export async function POST(request) {
   // Fail closed until a real study-contact address is configured for HELP replies.
   const studyContact = process.env.STUDY_CONTACT_EMAIL;
-  if (!studyContact || !/^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(studyContact))
+  if (!studyContact || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(studyContact))
     return new Response('Study contact not configured', {status:503});
   const secret = process.env.CRON_SECRET;
   if (!secret) return new Response('Scheduler not configured', { status: 503 });
