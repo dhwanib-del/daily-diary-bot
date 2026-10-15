@@ -1,15 +1,15 @@
-# 🌷 Daily Diary Bot — Photon + Supabase
+# Daily Diary Bot — Photon + Supabase
 
-An implementation starter for a **seven-day, five-question conversational iMessage diary study**. It asks one question per text and saves responses in a dedicated private Supabase Postgres schema. It does **not** call a generative AI API. Study replies are parsed using a deterministic answer key, so questions remain comparable.
+A working pilot implementation for a **seven-day, five-question conversational iMessage diary study**. It asks one question per text and saves responses in a dedicated private Supabase Postgres schema. It does **not** call a generative AI API. Study replies are parsed using a deterministic answer key, so questions remain comparable.
 
-**State:** The question logic and sample dialogue have been tested locally. This repository has **not** yet been deployed or tested against an actual Photon number or Supabase database, because the study's service credentials, participant consent, and dedicated database have not been configured. Do not enroll real people until you complete the test checklist below.
+**State:** This bot is deployed for a controlled single-device pilot on Vercel with Photon and Supabase. Automatic recurring dispatch must remain disabled until the full inbound-reply test is verified. Do not enroll real research participants without the approved consent and testing checklist below.
 
 ## Daily flow (five numbered questions)
 
 | # | Prompt | Stored fields |
 |---|---|---|
 | 1 | Did you get outside? Went / tried / wanted but stayed / chose to stay | `activity` |
-| 2 | Mood earlier and now (reply `2 4`) | `mood_earlier`, `mood_now` |
+| 2 | Current mood, one number from 1-5 | `mood_now` (`mood_earlier` is legacy only) |
 | 3 | Main reason for going out or staying in (branching) | `main_reason` |
 | 4 | Perceived effect of outing/staying home on mood | `perceived_mood_effect` |
 | 5 | How much of the day's intended activities got done? | `functioning` |
@@ -109,7 +109,7 @@ This avoids a Vercel Hobby limitation: Vercel cron jobs on Hobby plans only run 
 2. `node scripts/demo.mjs` displays a complete sample conversation without sending messages.
 3. Deploy, configure Photon webhook and secrets, and enroll **one** test participant.
 4. Make Day 1 `start_on` today's local calendar date. Test within the evening window, or temporarily change `dueNow()` in a nonproduction test copy to send the opening question now.
-5. Reply `1`, `2 4`, `4`, `1`, `2`. Check the five saved fields and `status='complete'` in `diary.sessions`.
+5. Reply `1`, `4`, `4`, `1`, `2`. Check the saved fields and `status='complete'` in `diary.sessions`.
 6. Reply with an invalid value, `SKIP`, and `NOTE: ...`; verify behavior and no duplicates with repeated webhook delivery.
 7. Check `HELP`, and finally `STOP`; confirm `opted_in=false` and no future prompts.
 8. Check `diary.outbox` for `failed` messages, retries, unexpected duplicates or unsent prompts. Check Supabase Cron logs and Vercel Function logs.
