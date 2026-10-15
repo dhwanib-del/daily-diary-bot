@@ -8,11 +8,13 @@ A working pilot implementation for a **seven-day, five-question conversational i
 
 | # | Prompt | Stored fields |
 |---|---|---|
-| 1 | Did you get outside? Went / tried / wanted but stayed / chose to stay | `activity` |
+| 1 | Neutral description of whether they went out, tried, wanted to, or chose to stay in | `activity` |
 | 2 | Current mood, one number from 1-5 | `mood_now` (`mood_earlier` is legacy only) |
-| 3 | Main reason for going out or staying in (branching) | `main_reason` |
-| 4 | Perceived effect of outing/staying home on mood | `perceived_mood_effect` |
+| 3 | Self-selected main reason for going out or staying in (branching) | `main_reason` |
+| 4 | Perceived mood experience alongside being out or staying in (including no difference/unsure) | `perceived_mood_effect` |
 | 5 | How much of the day's intended activities got done? | `functioning` |
+
+Questions are phrased to avoid assuming that staying in is bad or that going outside improves mood. The Q4 response is a participant's subjective impression, **not evidence that location caused a mood change**. Existing 1–5 option codes and storage fields are kept for pilot compatibility; note changes in question wording when analyzing data across versions.
 
 After Q5 participants see a thank-you and can optionally send `NOTE: ...` to add one sentence of context. They may reply `SKIP` to questions 2–5 (including mood) or `STOP` at any time. The bot supports `HELP` and does not accept messages from unrecognized, unconsented phone numbers.
 
