@@ -7,9 +7,9 @@
 -- 2. Replace consent timestamps with the ACTUAL recorded opt-in timestamps.
 --    Keep written/recorded consent evidence in your approved university storage.
 -- 3. Pick start_on for each participant. Each receives five short questions
---    starting on their own local date between 8:30 and 9:15 PM for seven days.
+--    starting October 16 at 9:00 PM local time for seven days (through October 22).
 -- 4. Replace the timezone if needed (e.g. America/Detroit).
--- 5. Duplicate/delete VALUES rows as required. Use unique P002, P003, ... codes.
+-- 5. Duplicate/delete VALUES rows as required. For 20 participants use P002 through P021.
 -- 6. Verify the scheduler is still OFF before you finish reviewing the roster.
 -- No messages are sent when this SQL runs.
 
