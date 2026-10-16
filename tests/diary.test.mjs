@@ -69,7 +69,11 @@ test('one-time welcome text introduces the research team and opt-out',()=>{
  assert.match(WELCOME,/STOP/);
  assert.match(WELCOME,/HELP/);
  assert.doesNotMatch(WELCOME,/\p{Extended_Pictographic}/u);
- assert.ok(WELCOME.length<360);
+ assert.match(WELCOME,/what influences people to go outside or stay in/i);
+ assert.match(WELCOME,/A diary study is a series of quick check-ins/i);
+ assert.match(WELCOME,/no right or wrong answers/i);
+ assert.match(WELCOME,/around 9 PM/i);
+ assert.ok(WELCOME.length<800);
 });
 
 test('2026 launch evenings are 9:00 PM Detroit local Oct 16-22',()=>{
