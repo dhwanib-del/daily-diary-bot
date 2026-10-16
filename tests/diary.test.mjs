@@ -103,6 +103,7 @@ test('optional reflections rotate across seven days and retain opt-in',()=>{
   assert.match(prompt,/Optional reflection/);
   assert.match(prompt,/NOTE:/);
   assert.match(prompt,/You can also leave it here/);
+  assert.match(prompt,/With love,\\nDhwani, Muffi & Ashley$/);
   assert.doesNotMatch(prompt,/\p{Extended_Pictographic}/u);
   assert.ok(prompt.length<270);
  }
