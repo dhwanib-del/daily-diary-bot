@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAnswer, dayOfStudy, dueNow, localMoment,QUESTIONS,getNote} from '../lib/diary.mjs';
+import {parseAnswer, dayOfStudy, dueNow, localMoment,QUESTIONS,WELCOME,getNote} from '../lib/diary.mjs';
 test('activity codes and incomplete answers',()=>{
  assert.deepEqual(parseAnswer(1,' 2 '),{activity:'tried'});
  assert.equal(parseAnswer(1,'8'),null);
@@ -59,4 +59,14 @@ test('neutral mood wording and response codes stay comparable',()=>{
  assert.deepEqual(parseAnswer(3,'5','chose'),{main_reason:'preferred_home'});
  assert.deepEqual(parseAnswer(4,'2','went'),{perceived_mood_effect:'same'});
  assert.deepEqual(parseAnswer(5,'4'),{functioning:'little_planned'});
+});
+
+test('one-time welcome text introduces the research team and opt-out',()=>{
+ assert.match(WELCOME,/Dhwani, Muffi, and Ashley/);
+ assert.match(WELCOME,/7-day diary study/);
+ assert.match(WELCOME,/5 short questions/);
+ assert.match(WELCOME,/STOP/);
+ assert.match(WELCOME,/HELP/);
+ assert.doesNotMatch(WELCOME,/\p{Extended_Pictographic}/u);
+ assert.ok(WELCOME.length<310);
 });
