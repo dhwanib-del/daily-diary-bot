@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {parseAnswer, dayOfStudy, dueNow, localMoment,QUESTIONS,WELCOME,getNote} from '../lib/diary.mjs';
+import {parseAnswer, dayOfStudy, dueNow, localMoment,QUESTIONS,WELCOME,FINISH,REFLECTIONS,getNote} from '../lib/diary.mjs';
 test('activity codes and incomplete answers',()=>{
  assert.deepEqual(parseAnswer(1,' 2 '),{activity:'tried'});
  assert.equal(parseAnswer(1,'8'),null);
@@ -19,9 +19,14 @@ test('simple one-number mood reply and backwards compatibility',()=>{
 test('branching reasons are different',()=>{
  assert.deepEqual(parseAnswer(3,'1','went'),{main_reason:'work_class'});
  assert.deepEqual(parseAnswer(3,'1','wanted'),{main_reason:'energy'});
- assert.equal(parseAnswer(3,'6','went'),null);
+ assert.deepEqual(parseAnswer(3,'6','went'),{main_reason:'break_or_change'});
+ assert.deepEqual(parseAnswer(3,'7','wanted'),{main_reason:'getting_ready_effort'});
+ assert.deepEqual(parseAnswer(3,'8','chose'),{main_reason:'lost_track_of_time'});
+ assert.equal(parseAnswer(3,'7','went'),null);
  assert.match(QUESTIONS[3](2,'went'),/reason for going out/);
  assert.match(QUESTIONS[3](2,'chose'),/reason for staying in/);
+ assert.match(QUESTIONS[3](2,'chose'),/Lost track of time/);
+ assert.match(QUESTIONS[3](2,'went'),/Wanted a break or change/);
 });
 test('effects, functioning and note',()=>{
  assert.deepEqual(parseAnswer(4,'4','went'),{perceived_mood_effect:'unsure'});
@@ -88,4 +93,19 @@ test('2026 launch evenings are 9:00 PM Detroit local Oct 16-22',()=>{
   assert.equal(dueNow('2026-10-16','America/Detroit',early),null);
  }
  assert.equal(dueNow('2026-10-16','America/Detroit',new Date('2026-10-24T01:05:00Z')),null);
+});
+
+test('optional reflections rotate across seven days and retain opt-in',()=>{
+ assert.equal(Object.keys(REFLECTIONS).length,7);
+ for(let day=1;day<=7;day++){
+  const prompt=FINISH(day);
+  assert.match(prompt,new RegExp('Day '+day));
+  assert.match(prompt,/Optional reflection/);
+  assert.match(prompt,/NOTE:/);
+  assert.match(prompt,/You can also leave it here/);
+  assert.doesNotMatch(prompt,/\\p{Extended_Pictographic}/u);
+  assert.ok(prompt.length<270);
+ }
+ assert.match(FINISH(4),/reminder or gentle nudge/);
+ assert.match(FINISH(7),/Looking back on the week/);
 });
