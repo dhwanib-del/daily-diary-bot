@@ -25,7 +25,7 @@ WITH roster(participant_code, phone_e164, timezone, start_on, consent_at) AS (
     ('P006', '+15033192875', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_6'::timestamptz),
     ('P007', '+1540998511', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_7'::timestamptz),
     ('P008', '+13123883794', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_8'::timestamptz),
-    ('P009', '+13123883794', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_8'::timestamptz),
+    ('P009', '+13123883794', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_8'::timestamptz)
 ),
 created AS (
   INSERT INTO diary.participants
