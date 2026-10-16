@@ -32,9 +32,10 @@ test('study day boundaries and timezone incl DST',()=>{
  assert.equal(dayOfStudy('2026-10-14','2026-10-20'),7);
  assert.equal(dayOfStudy('2026-10-14','2026-10-21'),8);
  assert.deepEqual(localMoment(new Date('2026-10-15T00:35:00Z'),'America/Detroit'),{date:'2026-10-14',minutes:20*60+35});
- assert.deepEqual(dueNow('2026-10-14','America/Detroit',new Date('2026-10-15T00:35:00Z')),{date:'2026-10-14',day:1});
+ assert.equal(dueNow('2026-10-14','America/Detroit',new Date('2026-10-15T00:35:00Z')),null);
+ assert.deepEqual(dueNow('2026-10-14','America/Detroit',new Date('2026-10-15T01:05:00Z')),{date:'2026-10-14',day:1});
  assert.equal(dueNow('2026-10-14','America/Detroit',new Date('2026-10-15T02:35:00Z')),null);
- assert.deepEqual(dueNow('2026-10-31','America/Detroit',new Date('2026-11-02T01:35:00Z')),{date:'2026-11-01',day:2});
+ assert.deepEqual(dueNow('2026-10-31','America/Detroit',new Date('2026-11-02T02:05:00Z')),{date:'2026-11-01',day:2});
  assert.equal(dueNow('2026-10-14','America/Detroit',new Date('2026-10-22T00:35:00Z')),null);
 });
 
@@ -69,4 +70,18 @@ test('one-time welcome text introduces the research team and opt-out',()=>{
  assert.match(WELCOME,/HELP/);
  assert.doesNotMatch(WELCOME,/\p{Extended_Pictographic}/u);
  assert.ok(WELCOME.length<360);
+});
+
+test('2026 launch evenings are 9:00 PM Detroit local Oct 16-22',()=>{
+ for (let day=16;day<=22;day++) {
+  const iso=`2026-10-${day}`;
+  const d=new Date(`${iso}T01:05:00Z`);
+  // The matching Detroit evening is 01:05 UTC on the *following* day.
+  d.setUTCDate(d.getUTCDate()+1);
+  const found=dueNow('2026-10-16','America/Detroit',d);
+  assert.deepEqual(found,{date:iso,day:day-15});
+  const early=new Date(d.getTime()-30*60000);
+  assert.equal(dueNow('2026-10-16','America/Detroit',early),null);
+ }
+ assert.equal(dueNow('2026-10-16','America/Detroit',new Date('2026-10-24T01:05:00Z')),null);
 });
