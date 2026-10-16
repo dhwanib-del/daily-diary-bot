@@ -2,7 +2,7 @@
 
 A working pilot implementation for a **seven-day, five-question conversational iMessage diary study**. It asks one question per text and saves responses in a dedicated private Supabase Postgres schema. It does **not** call a generative AI API. Study replies are parsed using a deterministic answer key, so questions remain comparable.
 
-**State:** This bot is deployed for a controlled single-device pilot on Vercel with Photon and Supabase. Automatic recurring dispatch must remain disabled until the full inbound-reply test is verified. Do not enroll real research participants without the approved consent and testing checklist below.
+**State:** One-device iMessage end-to-end pilot completed. Launch is prepared for 20 consenting participants starting **2026-10-16** and ending **2026-10-22**, with daily questions at 9:00 PM local time. Automatic recurring dispatch must remain disabled until participants are enrolled, the public study-contact email is configured, and previously shared Photon secrets are rotated and verified. Do not enroll anyone without consent.
 
 ## Daily flow (five numbered questions)
 
@@ -18,7 +18,7 @@ Questions are phrased to avoid assuming that staying in is bad or that going out
 
 After Q5 participants see a thank-you and can optionally send `NOTE: ...` to add one sentence of context. They may reply `SKIP` to questions 2–5 (including mood) or `STOP` at any time. The bot supports `HELP` and does not accept messages from unrecognized, unconsented phone numbers.
 
-One check-in is sent between **8:30–9:15 p.m. in each participant's local timezone** on each of seven consecutive local calendar dates, with default timezone `America/Detroit`. The scheduler is invoked every 15 minutes and uses date calculations robust to daylight-saving changes. If it fails throughout the entire delivery window, a diary day may be missed (not silently backfilled); check cron/outbox status during the pilot.
+One check-in is scheduled for **9:00 p.m. in each participant's local timezone** on each of seven consecutive local calendar dates (9:00–9:15 p.m. dispatch window, subject to provider/network delay), with default timezone `America/Detroit`. The scheduler is invoked every 15 minutes and uses date calculations robust to daylight-saving changes. If it fails throughout the entire delivery window, a diary day may be missed (not silently backfilled); check cron/outbox status during the pilot.
 
 ## Architecture
 
