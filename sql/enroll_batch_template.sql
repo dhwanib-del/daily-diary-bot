@@ -17,8 +17,15 @@ BEGIN;
 
 WITH roster(participant_code, phone_e164, timezone, start_on, consent_at) AS (
   VALUES
-    ('P002', '+1REPLACE_NUMBER_1', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_1'::timestamptz),
-    ('P003', '+1REPLACE_NUMBER_2', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_2'::timestamptz)
+    ('P001', '+13129271466', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_1'::timestamptz),
+    ('P002', '+17349256030', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_2'::timestamptz),
+    ('P003', '+12197800765', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_3'::timestamptz),
+    ('P004', '+15173882806', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_4'::timestamptz),
+    ('P005', '+16168405252', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_5'::timestamptz),
+    ('P006', '+15033192875', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_6'::timestamptz),
+    ('P007', '+1540998511', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_7'::timestamptz),
+    ('P008', '+13123883794', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_8'::timestamptz),
+    ('P009', '+13123883794', 'America/Detroit', DATE '2026-10-16', 'REPLACE_ACTUAL_CONSENT_TIMESTAMP_8'::timestamptz),
 ),
 created AS (
   INSERT INTO diary.participants
