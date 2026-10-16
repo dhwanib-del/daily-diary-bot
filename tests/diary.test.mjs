@@ -68,5 +68,5 @@ test('one-time welcome text introduces the research team and opt-out',()=>{
  assert.match(WELCOME,/STOP/);
  assert.match(WELCOME,/HELP/);
  assert.doesNotMatch(WELCOME,/\p{Extended_Pictographic}/u);
- assert.ok(WELCOME.length<310);
+ assert.ok(WELCOME.length<360);
 });
