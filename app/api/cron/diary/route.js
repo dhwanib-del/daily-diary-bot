@@ -11,6 +11,17 @@ export async function POST(request) {
     return new Response('Unauthorized', { status: 401 });
   if (!process.env.DATABASE_URL || !process.env.IMESSAGE_PROJECT_ID || !process.env.IMESSAGE_PROJECT_SECRET)
     return new Response('Messaging/database not configured', { status: 503 });
+  // Restricted maintenance command: checks provider enrollment without logging
+  // or returning participants' phone numbers or provider credentials.
+  const payload = await request.json().catch(() => ({}));
+  if (payload?.maintenance === 'audit_photon_users' ||
+      payload?.maintenance === 'register_photon_users') {
+    const {reconcilePhotonUsers} = await import('../../../../lib/photon-users.mjs');
+    const result = await reconcilePhotonUsers({
+      register: payload.maintenance === 'register_photon_users'
+    });
+    return Response.json(result, {status: result.ok ? 200 : 502});
+  }
   const [{bot}, {scheduleToday, flushOutbox}] = await Promise.all([
     import('../../../../lib/bot.mjs'),
     import('../../../../lib/db.mjs')
