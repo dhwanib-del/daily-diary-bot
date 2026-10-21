@@ -23,6 +23,17 @@ export async function POST(request) {
     });
     return Response.json(result, {status: result.ok ? 200 : 502});
   }
+  if(payload?.maintenance==='start_day1_now') {
+    const code=payload?.participant_code;
+    const [{bot},{startDay1Now,flushOutbox,day1DispatchStatus}]=await Promise.all([
+      import('../../../../lib/bot.mjs'),
+      import('../../../../lib/db.mjs')
+    ]);
+    const result=await startDay1Now(code);
+    if(!result.ok)return Response.json(result,{status:409});
+    const attempted=await flushOutbox(bot,2);
+    return Response.json({...result,attempted,...await day1DispatchStatus(code)});
+  }
   const [{bot}, {scheduleToday, flushOutbox}] = await Promise.all([
     import('../../../../lib/bot.mjs'),
     import('../../../../lib/db.mjs')
