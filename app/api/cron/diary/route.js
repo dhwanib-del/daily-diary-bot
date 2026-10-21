@@ -18,7 +18,8 @@ export async function POST(request) {
       payload?.maintenance === 'register_photon_users') {
     const {reconcilePhotonUsers} = await import('../../../../lib/photon-users.mjs');
     const result = await reconcilePhotonUsers({
-      register: payload.maintenance === 'register_photon_users'
+      register: payload.maintenance === 'register_photon_users',
+      includeAssignedLines: payload.maintenance === 'audit_photon_users' && payload.include_assigned_lines === true
     });
     return Response.json(result, {status: result.ok ? 200 : 502});
   }
