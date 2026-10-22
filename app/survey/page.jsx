@@ -7,7 +7,7 @@ export const metadata = {
 
 function Choice({name,value,children}) {
   return <label className="answer-option">
-    <input type="radio" name={name} value={value} required={true}/>
+    <input type="radio" name={name} value={value} required={name !== "reminder_timing"}/>
     <span className="answer-mark" aria-hidden="true"/>
     <span>{children}</span>
   </label>;
